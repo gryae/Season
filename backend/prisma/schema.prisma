@@ -1,0 +1,267 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// CORE VESSEL
+// ============================================
+model Vessel {
+  id                   String                @id @default(cuid())
+  name                 String
+  imoNumber            String                @unique
+  vesselType           String
+  flag                 String
+  currentRunHours      Float                 @default(0)
+  status               VesselStatus          @default(ACTIVE)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  telemetries          Telemetry[]
+  workOrders           WorkOrder[]
+  maintenanceSchedules MaintenanceSchedule[]
+  certificates         VesselCertificate[]
+}
+
+enum VesselStatus {
+  ACTIVE
+  MAINTENANCE
+  DOCKED
+  INACTIVE
+}
+
+// ============================================
+// GPS TELEMETRY
+// ============================================
+model Telemetry {
+  id         String   @id @default(cuid())
+  vesselId   String
+  latitude   Float
+  longitude  Float
+  speed      Float    @default(0) // knots
+  heading    Float    @default(0) // degrees
+  runHours   Float    @default(0)
+  timestamp  DateTime @default(now())
+
+  vessel     Vessel   @relation(fields: [vesselId], references: [id])
+
+  @@index([vesselId])
+  @@index([timestamp])
+}
+
+// ============================================
+// MAINTENANCE SCHEDULE
+// ============================================
+model MaintenanceSchedule {
+  id                  String   @id @default(cuid())
+  vesselId            String
+  taskName            String
+  description         String?
+  
+  recurrenceType      RecurrenceType @default(RUN_HOURS)
+  
+  // Meter-based (Run Hours)
+  intervalRunHours    Float?   // Every N run hours
+  targetRunHours      Float?   // Next trigger at this run hours value
+  lastTriggeredAt     Float?   // run_hours value when last triggered
+  
+  // Time-based (Calendar)
+  timeFrequency       TimeFrequency? 
+  timeInterval        Int?         // Every X (days/weeks/months/years)
+  nextDueDate         DateTime?    // Next calendar trigger
+  
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  vessel              Vessel      @relation(fields: [vesselId], references: [id])
+  workOrders          WorkOrder[]
+}
+
+enum RecurrenceType {
+  RUN_HOURS
+  TIME_BASED
+}
+
+enum TimeFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+// ============================================
+// WORK ORDER
+// ============================================
+model WorkOrder {
+  id                    String          @id @default(cuid())
+  woNumber              String          @unique
+  vesselId              String
+  maintenanceScheduleId String?
+  title                 String
+  description           String?
+  type                  WorkOrderType   @default(CORRECTIVE)
+  priority              WOPriority      @default(MEDIUM)
+  status                WorkOrderStatus @default(PENDING)
+  assignedTo            String?
+  scheduledDate         DateTime?
+  completedAt           DateTime?
+  notes                 String?
+  photoUrl              String?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  vessel                Vessel               @relation(fields: [vesselId], references: [id])
+  maintenanceSchedule   MaintenanceSchedule? @relation(fields: [maintenanceScheduleId], references: [id])
+  sparepartUsages       WorkOrderSparepart[]
+  comments              WorkOrderComment[]
+}
+
+enum WorkOrderType {
+  CORRECTIVE
+  PREVENTIVE
+}
+
+enum WorkOrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum WOPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+// ============================================
+// WORK ORDER COMMENTS
+// ============================================
+model WorkOrderComment {
+  id           String    @id @default(cuid())
+  workOrderId  String
+  senderName   String
+  message      String
+  createdAt    DateTime  @default(now())
+
+  workOrder    WorkOrder @relation(fields: [workOrderId], references: [id])
+}
+
+// ============================================
+// SPAREPART / INVENTORY
+// ============================================
+model Sparepart {
+  id                 String   @id @default(cuid())
+  partNumber         String   @unique
+  name               String
+  description        String?
+  category           String
+  unit               String   @default("pcs")
+  currentStock       Int      @default(0)
+  minimumStockLevel  Int      @default(5)
+  unitPrice          Float    @default(0)
+  location           String?  // Storage location/bin
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  workOrderUsages    WorkOrderSparepart[]
+  purchaseRequests   PurchaseRequest[]
+}
+
+// Junction table: which spareparts were used in which WO
+model WorkOrderSparepart {
+  id           String    @id @default(cuid())
+  workOrderId  String
+  sparepartId  String
+  quantityUsed Int
+  createdAt    DateTime  @default(now())
+
+  workOrder    WorkOrder @relation(fields: [workOrderId], references: [id])
+  sparepart    Sparepart @relation(fields: [sparepartId], references: [id])
+}
+
+// ============================================
+// PURCHASE REQUEST
+// ============================================
+model PurchaseRequest {
+  id              String            @id @default(cuid())
+  prNumber        String            @unique
+  sparepartId     String
+  quantityNeeded  Int
+  status          PRStatus          @default(PENDING)
+  reason          String?
+  requestedAt     DateTime          @default(now())
+  approvedAt      DateTime?
+  fulfilledAt     DateTime?
+
+  sparepart       Sparepart         @relation(fields: [sparepartId], references: [id])
+}
+
+enum PRStatus {
+  PENDING
+  APPROVED
+  ORDERED
+  FULFILLED
+  CANCELLED
+}
+
+// ============================================
+// VESSEL CERTIFICATES (COMPLIANCE)
+// ============================================
+model VesselCertificate {
+  id              String      @id @default(cuid())
+  vesselId        String
+  certificateName String
+  certificateNumber String?
+  issuingAuthority  String?
+  issueDate       DateTime?
+  expiryDate      DateTime
+  status          CertStatus  @default(VALID)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  vessel          Vessel      @relation(fields: [vesselId], references: [id])
+}
+
+enum CertStatus {
+  VALID
+  EXPIRING_SOON
+  EXPIRED
+}
+
+// ============================================
+// SYSTEM ALERTS
+// ============================================
+model Alert {
+  id          String      @id @default(cuid())
+  type        AlertType
+  title       String
+  message     String
+  severity    AlertSeverity @default(INFO)
+  referenceId String?     // ID of related entity
+  referenceType String?   // 'VesselCertificate' | 'WorkOrder' | 'Sparepart'
+  isRead      Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+}
+
+enum AlertType {
+  CERTIFICATE_EXPIRY
+  LOW_STOCK
+  MAINTENANCE_DUE
+  WORK_ORDER_CREATED
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
