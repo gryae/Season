@@ -116,6 +116,7 @@ export const vesselApi = {
   getAll: () => api.get<Vessel[]>('/vessels').then(r => r.data),
   getOne: (id: string) => api.get<Vessel>(`/vessels/${id}`).then(r => r.data),
   getStats: () => api.get<{ total: number; active: number; maintenance: number; docked: number }>('/vessels/stats').then(r => r.data),
+  update: (id: string, data: Partial<Vessel>) => api.patch<Vessel>(`/vessels/${id}`, data).then(r => r.data),
 };
 
 // Telemetry
