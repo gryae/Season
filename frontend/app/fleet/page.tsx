@@ -96,7 +96,7 @@ function VesselDetailModal({ vessel, onClose, onEdit }: { vessel: LiveVessel; on
               <Anchor size={24} color="white" />
             </div>
             <div>
-              <h2 className="font-bold text-white text-xl leading-tight">{vessel.name}</h2>
+              <h2 className="font-bold text-season-text text-xl leading-tight">{vessel.name}</h2>
               <p className="text-sm mt-1" style={{ color: '#6b7280' }}>{vessel.imoNumber} · {vessel.vesselType}</p>
             </div>
           </div>
@@ -144,7 +144,7 @@ function VesselDetailModal({ vessel, onClose, onEdit }: { vessel: LiveVessel; on
                   ].map(({ label, value }) => (
                     <div key={label}>
                       <p className="text-xs mb-1" style={{ color: '#4b5563' }}>{label}</p>
-                      <p className="font-mono text-sm font-bold text-white">{value}</p>
+                      <p className="font-mono text-sm font-bold text-season-text">{value}</p>
                     </div>
                   ))}
                 </div>
@@ -158,12 +158,12 @@ function VesselDetailModal({ vessel, onClose, onEdit }: { vessel: LiveVessel; on
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-xl p-5 text-center flex flex-col justify-center items-center" style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)' }}>
                   <Gauge size={20} className="mb-2" style={{ color: '#a78bfa' }} />
-                  <p className="text-2xl font-bold text-white">{vessel.currentRunHours.toFixed(1)}</p>
+                  <p className="text-2xl font-bold text-season-text">{vessel.currentRunHours.toFixed(1)}</p>
                   <p className="text-sm mt-1" style={{ color: '#6b7280' }}>Run Hours</p>
                 </div>
                 <div className="rounded-xl p-5 text-center flex flex-col justify-center items-center" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)' }}>
                   <Activity size={20} className="mb-2" style={{ color: '#34d399' }} />
-                  <p className="text-2xl font-bold text-white">{workOrders.length}</p>
+                  <p className="text-2xl font-bold text-season-text">{workOrders.length}</p>
                   <p className="text-sm mt-1" style={{ color: '#6b7280' }}>Work Orders</p>
                 </div>
               </div>
@@ -178,7 +178,7 @@ function VesselDetailModal({ vessel, onClose, onEdit }: { vessel: LiveVessel; on
                 ].map(({ label, value }) => (
                   <div key={label} className="flex justify-between items-center">
                     <span className="text-sm" style={{ color: '#6b7280' }}>{label}</span>
-                    <span className="text-sm font-medium text-white">{value}</span>
+                    <span className="text-sm font-medium text-season-text">{value}</span>
                   </div>
                 ))}
               </div>
@@ -204,7 +204,7 @@ function VesselDetailModal({ vessel, onClose, onEdit }: { vessel: LiveVessel; on
                             <FileText size={14} style={{ color: '#a78bfa' }} />
                           </div>
                           <div className="min-w-0">
-                            <p className="text-base font-semibold text-white truncate">{wo.title}</p>
+                            <p className="text-base font-semibold text-season-text truncate">{wo.title}</p>
                             <p className="text-xs mt-0.5" style={{ color: '#6b7280' }}>#{wo.woNumber}</p>
                           </div>
                         </div>
@@ -260,19 +260,19 @@ function VesselFormModal({ initialData, onClose, onSave }: { initialData?: LiveV
   return (
     <div className="fixed inset-0 z-[2500] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-lg bg-[#120a2e] border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6">
-        <h2 className="font-bold text-white text-lg mb-4">{initialData ? 'Edit Vessel' : 'Add New Vessel'}</h2>
+      <div className="relative w-full max-w-lg bg-season-surface border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6">
+        <h2 className="font-bold text-season-text text-lg mb-4">{initialData ? 'Edit Vessel' : 'Add New Vessel'}</h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Vessel Name</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Vessel Name</label>
             <input value={name} onChange={(e) => setName(e.target.value)} className="season-input" placeholder="e.g. MV Explorer" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">IMO Number</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">IMO Number</label>
             <input value={imoNumber} onChange={(e) => setImoNumber(e.target.value)} className="season-input" placeholder="e.g. IMO 1234567" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Vessel Type</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Vessel Type</label>
             <div className="relative">
               <select value={vesselType} onChange={(e) => setVesselType(e.target.value)} className="season-select w-full" style={{ appearance: 'none' }}>
                 <option>Bulk Carrier</option><option>Oil Tanker</option><option>Container Ship</option>
@@ -305,7 +305,7 @@ function VesselTableRow({ vessel, onClick, onUpdateStatus }: {
             <Anchor size={14} style={{ color: '#a78bfa' }} />
           </div>
           <div>
-            <p className="text-sm font-semibold text-white">{vessel.name}</p>
+            <p className="text-sm font-semibold text-season-text">{vessel.name}</p>
             <p className="text-xs" style={{ color: '#6b7280' }}>{vessel.imoNumber}</p>
           </div>
         </div>
@@ -466,7 +466,7 @@ export default function FleetPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-season-text flex items-center gap-2">
             <Anchor size={22} style={{ color: '#a78bfa' }} /> Vessels
           </h1>
           <p className="text-sm mt-1" style={{ color: '#6b7280' }}>Fleet registry — {stats.total} vessels tracked</p>
@@ -538,7 +538,7 @@ export default function FleetPage() {
             <div className="glass-card p-4">
               <div className="flex items-center gap-2 mb-1">
                 <Anchor size={14} style={{ color: '#a78bfa' }} />
-                <span className="text-sm font-semibold text-white">Fleet Registry</span>
+                <span className="text-sm font-semibold text-season-text">Fleet Registry</span>
               </div>
               <p className="text-xs" style={{ color: '#6b7280' }}>Click to view details</p>
             </div>
@@ -561,7 +561,7 @@ export default function FleetPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-semibold text-sm text-white truncate">{vessel.name}</span>
+                          <span className="font-semibold text-sm text-season-text truncate">{vessel.name}</span>
                           <VesselStatusBadge status={vessel.status} />
                         </div>
                         <div className="text-xs mt-1" style={{ color: '#6b7280' }}>{vessel.imoNumber} · {vessel.vesselType}</div>
@@ -591,7 +591,7 @@ export default function FleetPage() {
           <div className="flex items-center justify-between gap-3 px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="flex items-center gap-2">
               <List size={15} style={{ color: '#a78bfa' }} />
-              <span className="text-sm font-semibold text-white">Vessels — {filteredVessels.length} results</span>
+              <span className="text-sm font-semibold text-season-text">Vessels — {filteredVessels.length} results</span>
             </div>
             <div className="relative">
               <input

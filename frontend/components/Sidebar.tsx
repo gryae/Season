@@ -1,5 +1,6 @@
 'use client';
 
+import { ThemeToggle } from './ThemeToggle';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -51,13 +52,13 @@ export function Sidebar() {
       style={{
         width: collapsed ? '72px' : '240px',
         minWidth: collapsed ? '72px' : '240px',
-        background: 'rgba(10, 5, 20, 0.95)',
-        borderRight: '1px solid rgba(255,255,255,0.06)',
+        background: 'var(--season-surface)',
+        borderRight: '1px solid var(--season-border)',
         backdropFilter: 'blur(20px)',
       }}
     >
       {/* Logo */}
-      <div className="flex items-center gap-3 px-4 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="flex items-center gap-3 px-4 py-5" style={{ borderBottom: '1px solid var(--season-border)' }}>
         <div className="relative flex-shrink-0">
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -72,14 +73,18 @@ export function Sidebar() {
         </div>
         {!collapsed && (
           <div>
-            <div className="text-white font-bold text-lg leading-none tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <div className="text-season-text font-bold text-lg leading-none tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
               Sea<span style={{ color: '#a78bfa' }}>Son</span>
             </div>
-            <div className="text-xs mt-0.5" style={{ color: '#6b7280' }}>
+            <div className="text-xs mt-0.5" style={{ color: 'var(--season-muted)' }}>
               Ship Management
             </div>
           </div>
         )}
+      </div>
+
+      <div className="px-3 mt-2 flex justify-center">
+        <ThemeToggle collapsed={collapsed} className={collapsed ? 'justify-center w-full' : 'w-full'} />
       </div>
 
       {/* Navigation */}
@@ -149,14 +154,14 @@ export function Sidebar() {
         onClick={() => setCollapsed(!collapsed)}
         className="flex items-center justify-center w-full py-3 transition-all"
         style={{
-          borderTop: '1px solid rgba(255,255,255,0.06)',
-          color: '#4b5563',
+          borderTop: '1px solid var(--season-border)',
+          color: 'var(--season-muted)',
           background: 'transparent',
           cursor: 'pointer',
           border: 'none',
           borderTopWidth: '1px',
           borderTopStyle: 'solid',
-          borderTopColor: 'rgba(255,255,255,0.06)',
+          borderTopColor: 'var(--season-border)',
         }}
       >
         <span style={{ fontSize: '0.75rem' }}>{collapsed ? '▶' : '◀'}</span>

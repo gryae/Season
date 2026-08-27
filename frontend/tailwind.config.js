@@ -8,6 +8,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'season-bg': 'var(--season-bg)',
+        'season-surface': 'var(--season-surface)',
+        'season-card': 'var(--season-card)',
+        'season-border': 'var(--season-border)',
+        'season-text': 'var(--season-text)',
+        'season-muted': 'var(--season-muted)',
+        'season-purple-border': 'var(--season-purple-border)',
+      },
+    
+      colors: {
         // SeaSon Purple Brand Palette
         season: {
           50: '#f5f3ff',

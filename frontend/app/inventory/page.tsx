@@ -134,7 +134,7 @@ function SparepartDetailModal({
   if (!sparepart) {
     return (
       <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm">
-        <Loader2 className="animate-spin text-white" size={40} />
+        <Loader2 className="animate-spin text-season-text" size={40} />
       </div>
     );
   }
@@ -174,7 +174,7 @@ function SparepartDetailModal({
         <div className="px-6 py-5 flex-shrink-0" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           <div className="flex items-start justify-between mb-1">
             <div className="flex-1 min-w-0 pr-4">
-              <h2 className="font-bold text-white text-xl leading-tight">{sparepart.name}</h2>
+              <h2 className="font-bold text-season-text text-xl leading-tight">{sparepart.name}</h2>
               <p className="text-sm mt-0.5 font-mono" style={{ color: '#a78bfa' }}>{sparepart.partNumber}</p>
             </div>
             <button onClick={onClose} style={{ color: '#6b7280', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer', width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -245,7 +245,7 @@ function SparepartDetailModal({
                   <div key={label} className="rounded-xl p-4 text-center flex flex-col items-center justify-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
                     <Icon size={20} className="mb-2" style={{ color }} />
                     <p className="text-xs mb-1" style={{ color: '#4b5563' }}>{label}</p>
-                    <p className="text-base font-bold text-white truncate w-full">{value}</p>
+                    <p className="text-base font-bold text-season-text truncate w-full">{value}</p>
                   </div>
                 ))}
               </div>
@@ -266,7 +266,7 @@ function SparepartDetailModal({
                     <MapPin size={13} style={{ color: '#38bdf8' }} />
                     <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#6b7280' }}>Location</p>
                   </div>
-                  <p className="text-sm font-medium text-white">{sparepart.location}</p>
+                  <p className="text-sm font-medium text-season-text">{sparepart.location}</p>
                 </div>
               )}
 
@@ -323,7 +323,7 @@ function SparepartDetailModal({
                               <FileText size={14} style={{ color: '#a78bfa' }} />
                             </div>
                             <div className="min-w-0">
-                              <p className="text-sm font-semibold text-white truncate">{wo.title}</p>
+                              <p className="text-sm font-semibold text-season-text truncate">{wo.title}</p>
                               <p className="text-xs mt-0.5" style={{ color: '#6b7280' }}>#{wo.woNumber}</p>
                             </div>
                           </div>
@@ -366,11 +366,11 @@ function SparepartDetailModal({
                     <div key={pr.id} className="rounded-xl p-4 flex items-center justify-between gap-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="font-mono text-sm text-white">{pr.prNumber}</p>
+                          <p className="font-mono text-sm text-season-text">{pr.prNumber}</p>
                           <PRStatusBadge status={pr.status} />
                         </div>
-                        <p className="text-xs text-slate-400 mb-1">{pr.reason}</p>
-                        <p className="text-xs text-slate-500">Requested {formatDistanceToNow(new Date(pr.requestedAt), { addSuffix: true })}</p>
+                        <p className="text-xs text-season-muted mb-1">{pr.reason}</p>
+                        <p className="text-xs text-season-muted">Requested {formatDistanceToNow(new Date(pr.requestedAt), { addSuffix: true })}</p>
                       </div>
                       <div className="text-right">
                         <p className="text-xl font-bold text-amber-400">{pr.quantityNeeded} <span className="text-sm font-normal">{sparepart.unit}</span></p>
@@ -409,23 +409,23 @@ function RaisePRModal({ sparepart, onClose, onSave }: { sparepart: Sparepart; on
   return (
     <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-sm bg-[#120a2e] border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6">
+      <div className="relative w-full max-w-sm bg-season-surface border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="font-bold text-white text-base">Raise Purchase Request</h2>
+          <h2 className="font-bold text-season-text text-base">Raise Purchase Request</h2>
           <button onClick={onClose} style={{ color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer' }}><X size={16} /></button>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Sparepart</label>
-            <p className="text-sm font-bold text-white">{sparepart.name}</p>
-            <p className="text-xs text-slate-400">{sparepart.partNumber}</p>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Sparepart</label>
+            <p className="text-sm font-bold text-season-text">{sparepart.name}</p>
+            <p className="text-xs text-season-muted">{sparepart.partNumber}</p>
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Quantity Needed ({sparepart.unit})</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Quantity Needed ({sparepart.unit})</label>
             <input type="number" min={1} value={qty} onChange={e => setQty(parseInt(e.target.value) || 1)} className="season-input" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Reason / Notes</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Reason / Notes</label>
             <textarea rows={3} value={reason} onChange={e => setReason(e.target.value)} className="season-input resize-none" />
           </div>
         </div>
@@ -454,15 +454,15 @@ function RestockModal({ sparepart, onClose, onSave }: { sparepart: Sparepart; on
   return (
     <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-sm bg-[#120a2e] border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6">
+      <div className="relative w-full max-w-sm bg-season-surface border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="font-bold text-white text-base">Restock: {sparepart.name}</h2>
+          <h2 className="font-bold text-season-text text-base">Restock: {sparepart.name}</h2>
           <button onClick={onClose} style={{ color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer' }}><X size={16} /></button>
         </div>
         <p className="text-sm mb-4" style={{ color: '#6b7280' }}>
-          Current stock: <span className="font-bold text-white">{sparepart.currentStock} {sparepart.unit}</span>
+          Current stock: <span className="font-bold text-season-text">{sparepart.currentStock} {sparepart.unit}</span>
         </p>
-        <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Add Quantity</label>
+        <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Add Quantity</label>
         <input type="number" min={1} value={qty} onChange={e => setQty(parseInt(e.target.value) || 1)} className="season-input mb-4" />
         <div className="flex gap-3">
           <button onClick={onClose} className="btn-secondary flex-1 justify-center">Cancel</button>
@@ -514,52 +514,52 @@ function SparepartFormModal({
   return (
     <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-lg bg-[#120a2e] border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-season-surface border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="font-bold text-white text-lg">{sparepart ? 'Edit Sparepart' : 'Add Sparepart'}</h2>
+          <h2 className="font-bold text-season-text text-lg">{sparepart ? 'Edit Sparepart' : 'Add Sparepart'}</h2>
           <button onClick={onClose} style={{ color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer' }}><X size={16} /></button>
         </div>
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Part Number</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Part Number</label>
               <input value={partNumber} onChange={e => setPartNumber(e.target.value)} className="season-input" placeholder="e.g. SP-100" />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Name</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Name</label>
               <input value={name} onChange={e => setName(e.target.value)} className="season-input" placeholder="e.g. Engine Valve" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Category</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Category</label>
               <input value={category} onChange={e => setCategory(e.target.value)} className="season-input" placeholder="e.g. Engine" />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Unit</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Unit</label>
               <input value={unit} onChange={e => setUnit(e.target.value)} className="season-input" placeholder="e.g. pcs" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Description</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Description</label>
             <textarea value={description} onChange={e => setDescription(e.target.value)} rows={2} className="season-input resize-none" placeholder="Part description..." />
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Current Stock</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Current Stock</label>
               <input type="number" min={0} value={currentStock} onChange={e => setCurrentStock(parseInt(e.target.value) || 0)} className="season-input" />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Min Stock</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Min Stock</label>
               <input type="number" min={0} value={minimumStockLevel} onChange={e => setMinimumStockLevel(parseInt(e.target.value) || 0)} className="season-input" />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Unit Price</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Unit Price</label>
               <input type="number" min={0} step={0.01} value={unitPrice} onChange={e => setUnitPrice(parseFloat(e.target.value) || 0)} className="season-input" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Location / Shelf</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Location / Shelf</label>
             <input value={location} onChange={e => setLocation(e.target.value)} className="season-input" placeholder="e.g. Shelf A-1" />
           </div>
           <div className="flex gap-3 pt-2">
@@ -647,7 +647,7 @@ export default function InventoryPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-season-text flex items-center gap-2">
             <Package size={22} style={{ color: '#a78bfa' }} />
             Inventory <span style={{ color: '#a78bfa' }}>&amp; Parts</span>
           </h1>
@@ -751,7 +751,7 @@ export default function InventoryPage() {
                       </td>
                       <td><span className="font-mono text-xs" style={{ color: '#a78bfa' }}>{sp.partNumber}</span></td>
                       <td>
-                        <div className="font-medium text-white">{sp.name}</div>
+                        <div className="font-medium text-season-text">{sp.name}</div>
                         {sp.description && <div className="text-xs mt-0.5 truncate max-w-[180px]" style={{ color: '#6b7280' }}>{sp.description}</div>}
                       </td>
                       <td><span className="badge badge-medium">{sp.category}</span></td>
@@ -823,7 +823,7 @@ export default function InventoryPage() {
                     <tr key={pr.id}>
                       <td><span className="font-mono text-xs" style={{ color: '#a78bfa' }}>{pr.prNumber}</span></td>
                       <td>
-                        <div className="font-medium text-white">{pr.sparepart?.name}</div>
+                        <div className="font-medium text-season-text">{pr.sparepart?.name}</div>
                         <div className="text-xs" style={{ color: '#6b7280' }}>{pr.sparepart?.partNumber}</div>
                       </td>
                       <td><span className="text-sm font-semibold" style={{ color: '#fbbf24' }}>{pr.quantityNeeded} {pr.sparepart?.unit}</span></td>

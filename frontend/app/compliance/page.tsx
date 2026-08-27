@@ -81,14 +81,14 @@ function CreateCertificateModal({ onClose, onSave }: { onClose: () => void; onSa
   return (
     <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-lg bg-[#120a2e] border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-season-surface border border-purple-500/30 shadow-[0_0_60px_rgba(139,92,246,0.3)] rounded-2xl p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="font-bold text-white text-lg">Add Certificate</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white"><X size={16} /></button>
+          <h2 className="font-bold text-season-text text-lg">Add Certificate</h2>
+          <button onClick={onClose} className="text-season-muted hover:text-season-text"><X size={16} /></button>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Vessel</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Vessel</label>
             <div className="relative">
               <select value={vesselId} onChange={e => setVesselId(e.target.value)} className="season-select w-full" style={{ appearance: 'none' }}>
                 <option value="" disabled>Select Vessel...</option>
@@ -98,26 +98,26 @@ function CreateCertificateModal({ onClose, onSave }: { onClose: () => void; onSa
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Certificate Name</label>
+            <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Certificate Name</label>
             <input value={certificateName} onChange={e => setCertificateName(e.target.value)} className="season-input" placeholder="e.g. Safety Management Certificate" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Cert Number</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Cert Number</label>
               <input value={certificateNumber} onChange={e => setCertificateNumber(e.target.value)} className="season-input" placeholder="e.g. SMC-12345" />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Issuing Authority</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Issuing Authority</label>
               <input value={issuingAuthority} onChange={e => setIssuingAuthority(e.target.value)} className="season-input" placeholder="e.g. DNV" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Issue Date</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Issue Date</label>
               <input type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="season-input text-sm p-2" />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Expiry Date</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Expiry Date</label>
               <input type="date" value={expiryDate} onChange={e => setExpiryDate(e.target.value)} className="season-input text-sm p-2" />
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function CompliancePage() {
       {/* Header */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-season-text flex items-center gap-2">
             <ShieldCheck size={22} style={{ color: '#a78bfa' }} />
             Compliance <span style={{ color: '#a78bfa' }}>Tracker</span>
           </h1>
@@ -301,10 +301,10 @@ export default function CompliancePage() {
                     filteredCerts.map(cert => (
                       <tr key={cert.id}>
                         <td>
-                          <div className="font-medium text-white">{cert.certificateName}</div>
+                          <div className="font-medium text-season-text">{cert.certificateName}</div>
                         </td>
                         <td>
-                          <div className="text-sm text-white">{cert.vessel?.name}</div>
+                          <div className="text-sm text-season-text">{cert.vessel?.name}</div>
                           <div className="text-xs" style={{ color: '#6b7280' }}>{cert.vessel?.imoNumber}</div>
                         </td>
                         <td>
@@ -368,7 +368,7 @@ export default function CompliancePage() {
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="font-semibold text-sm text-white">{alert.title}</span>
+                      <span className="font-semibold text-sm text-season-text">{alert.title}</span>
                       <span
                         className="badge"
                         style={{

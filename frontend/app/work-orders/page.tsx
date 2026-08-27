@@ -157,7 +157,7 @@ function CreateWOModal({ onClose, onSave, preVesselId, preVesselName }: {
           className="flex items-center justify-between px-6 py-4 flex-shrink-0"
           style={{ background: 'linear-gradient(135deg, #7c3aed, #0ea5e9)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
         >
-          <h2 className="font-bold text-white text-base flex items-center gap-2">
+          <h2 className="font-bold text-season-text text-base flex items-center gap-2">
             <ClipboardList size={18} /> New Work Order
           </h2>
           <button onClick={onClose} style={{ color: 'rgba(255,255,255,0.7)', background: 'none', border: 'none', cursor: 'pointer' }}>
@@ -312,7 +312,7 @@ function CreateWOModal({ onClose, onSave, preVesselId, preVesselName }: {
                   <input type="number" min={0} value={estHours} onChange={e => setEstHours(parseInt(e.target.value) || 0)} className="season-input text-center" placeholder="0" />
                   <p className="text-xs text-center mt-1" style={{ color: '#4b5563' }}>Hours</p>
                 </div>
-                <span className="text-white font-bold mb-4">:</span>
+                <span className="text-season-text font-bold mb-4">:</span>
                 <div className="flex-1">
                   <input type="number" min={0} max={59} value={estMinutes} onChange={e => setEstMinutes(parseInt(e.target.value) || 0)} className="season-input text-center" placeholder="0" />
                   <p className="text-xs text-center mt-1" style={{ color: '#4b5563' }}>Minutes</p>
@@ -342,7 +342,7 @@ function CreateWOModal({ onClose, onSave, preVesselId, preVesselName }: {
             <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.2)' }}>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={isRecurring} onChange={e => setIsRecurring(e.target.checked)} style={{ accentColor: '#7c3aed' }} />
-                <span className="text-sm font-semibold text-white">Make this a Recurring Work Order</span>
+                <span className="text-sm font-semibold text-season-text">Make this a Recurring Work Order</span>
               </label>
               {isRecurring && (
                 <div className="space-y-3 pt-1">
@@ -468,46 +468,46 @@ function UpdateWOModal({ wo, onClose, onSave }: { wo: WorkOrder; onClose: () => 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
       <div className="relative w-full max-w-5xl h-[85vh] flex flex-col rounded-2xl overflow-hidden" style={{ background: '#120a2e', border: '1px solid rgba(139,92,246,0.3)', boxShadow: '0 0 60px rgba(139,92,246,0.3)' }}>
-        <div className="flex items-center justify-between p-5 border-b border-purple-500/20 bg-[#0a0514]/50">
+        <div className="flex items-center justify-between p-5 border-b border-season-purple-border bg-season-bg/50">
           <div>
             <div className="flex items-center gap-3">
-              <h2 className="font-bold text-white text-lg">{wo.title}</h2>
+              <h2 className="font-bold text-season-text text-lg">{wo.title}</h2>
               <StatusBadge status={wo.status} />
               <PriorityBadge priority={wo.priority} />
             </div>
             <p className="text-sm mt-1" style={{ color: '#94a3b8' }}>{wo.woNumber} · {wo.vessel?.name}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/5 text-slate-400" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}><X size={20} /></button>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-season-card text-season-muted" style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}><X size={20} /></button>
         </div>
         <div className="flex flex-1 overflow-hidden">
-          <div className="w-1/2 p-6 overflow-y-auto border-r border-purple-500/20 space-y-4">
+          <div className="w-1/2 p-6 overflow-y-auto border-r border-season-purple-border space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Status</label>
+                <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Status</label>
                 <div className="relative">
                   <select value={status} onChange={e => setStatus(e.target.value as any)} className="season-select w-full" style={{ appearance: 'none' }}>
                     {STATUS_OPTIONS.filter(o => o.value !== 'ALL').map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
-                  <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500" />
+                  <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-season-muted" />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Assigned To</label>
+                <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Assigned To</label>
                 <input value={assignedTo} onChange={e => setAssignedTo(e.target.value)} placeholder="Engineer name..." className="season-input" />
               </div>
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Notes / Findings</label>
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Notes / Findings</label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="season-input resize-none" placeholder="Work performed..." />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-2 uppercase text-slate-400">Photo Proof</label>
-              {wo.photoUrl && !photoFile && <div className="mb-2"><img src={wo.photoUrl} alt="proof" className="h-32 w-auto rounded-lg border border-purple-500/20" /></div>}
+              <label className="block text-xs font-semibold mb-2 uppercase text-season-muted">Photo Proof</label>
+              {wo.photoUrl && !photoFile && <div className="mb-2"><img src={wo.photoUrl} alt="proof" className="h-32 w-auto rounded-lg border border-season-purple-border" /></div>}
               <input type="file" accept="image/*" onChange={e => setPhotoFile(e.target.files?.[0] || null)} className="season-input text-sm p-2" />
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-semibold uppercase text-slate-400">Spareparts Used</label>
+                <label className="text-xs font-semibold uppercase text-season-muted">Spareparts Used</label>
                 <button onClick={() => { 
                   const availablePart = spareparts.find(sp => sp.currentStock > 0);
                   if (availablePart) {
@@ -540,7 +540,7 @@ function UpdateWOModal({ wo, onClose, onSave }: { wo: WorkOrder; onClose: () => 
                         <select className="season-select text-sm py-2" style={{ appearance: 'none', width: '100%', borderColor: 'rgba(139,92,246,0.5)' }} value={item.sparepartId} onChange={e => { const sp = spareparts.find(s => s.id === e.target.value); setSparepartsUsed(p => p.map((s, i) => i === idx ? { ...s, sparepartId: e.target.value, name: sp?.name || '' } : s)); }}>
                           {spareparts.map(s => <option key={s.id} value={s.id} disabled={s.currentStock <= 0}>{s.name}</option>)}
                         </select>
-                        <ChevronDown size={14} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500" />
+                        <ChevronDown size={14} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-season-muted" />
                       </div>
                       <div className="text-xs whitespace-nowrap" style={{ color: sp?.currentStock === 0 ? '#f87171' : '#94a3b8', width: '60px', textAlign: 'right' }}>
                         {sp?.currentStock || 0} in stock
@@ -557,19 +557,19 @@ function UpdateWOModal({ wo, onClose, onSave }: { wo: WorkOrder; onClose: () => 
             </button>
           </div>
           <div className="w-1/2 flex flex-col bg-[#0f0826]">
-            <div className="p-4 border-b border-purple-500/20"><h3 className="font-semibold text-white text-sm">Work Order Updates & Chat</h3></div>
+            <div className="p-4 border-b border-season-purple-border"><h3 className="font-semibold text-season-text text-sm">Work Order Updates & Chat</h3></div>
             <div className="flex-1 p-4 overflow-y-auto space-y-3">
-              {comments.length === 0 ? <div className="text-center text-slate-500 text-sm mt-10">No updates yet.</div> : comments.map(c => (
-                <div key={c.id} className="bg-purple-500/10 border border-purple-500/20 p-3 rounded-xl rounded-tl-sm max-w-[85%]">
+              {comments.length === 0 ? <div className="text-center text-season-muted text-sm mt-10">No updates yet.</div> : comments.map(c => (
+                <div key={c.id} className="bg-purple-500/10 border border-season-purple-border p-3 rounded-xl rounded-tl-sm max-w-[85%]">
                   <div className="flex justify-between items-center mb-1 gap-4">
                     <span className="font-semibold text-xs text-purple-300">{c.senderName}</span>
-                    <span className="text-[10px] text-slate-500">{formatDistanceToNow(new Date(c.createdAt), { addSuffix: true })}</span>
+                    <span className="text-[10px] text-season-muted">{formatDistanceToNow(new Date(c.createdAt), { addSuffix: true })}</span>
                   </div>
-                  <p className="text-sm text-slate-300">{c.message}</p>
+                  <p className="text-sm text-season-text">{c.message}</p>
                 </div>
               ))}
             </div>
-            <form onSubmit={handleSendComment} className="p-4 border-t border-purple-500/20 flex gap-2">
+            <form onSubmit={handleSendComment} className="p-4 border-t border-season-purple-border flex gap-2">
               <input value={newComment} onChange={e => setNewComment(e.target.value)} placeholder="Type a message..." className="season-input flex-1" />
               <button type="submit" disabled={isSending || !newComment.trim()} className="btn-primary">{isSending ? <Loader2 size={16} className="animate-spin" /> : 'Send'}</button>
             </form>
@@ -599,7 +599,7 @@ function TodoView({ workOrders, onSelect }: { workOrders: WorkOrder[]; onSelect:
           <div key={col.key}>
             <div className="flex items-center gap-2 mb-3 px-1">
               <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: col.color }} />
-              <span className="text-sm font-semibold text-white">{col.label}</span>
+              <span className="text-sm font-semibold text-season-text">{col.label}</span>
               <span className="ml-auto text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: col.bg, color: col.color, border: `1px solid ${col.border}` }}>{items.length}</span>
             </div>
             <div className="space-y-2 min-h-[200px]" style={{ maxHeight: 'calc(100vh - 380px)', overflowY: 'auto' }}>
@@ -620,7 +620,7 @@ function TodoView({ workOrders, onSelect }: { workOrders: WorkOrder[]; onSelect:
                     <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.2)' }}>
                       <FileText size={11} style={{ color: '#a78bfa' }} />
                     </div>
-                    <p className="text-sm font-semibold text-white leading-snug line-clamp-2">{wo.title}</p>
+                    <p className="text-sm font-semibold text-season-text leading-snug line-clamp-2">{wo.title}</p>
                   </div>
                   <p className="text-xs mb-2" style={{ color: '#6b7280' }}>
                     <Anchor size={10} className="inline mr-1" style={{ color: '#a78bfa' }} />
@@ -688,7 +688,7 @@ function TableView({ workOrders, onSelect }: { workOrders: WorkOrder[]; onSelect
                 </td>
                 <td>
                   <div className="max-w-xs">
-                    <div className="text-sm font-medium text-white truncate">{wo.title}</div>
+                    <div className="text-sm font-medium text-season-text truncate">{wo.title}</div>
                     {wo.maintenanceSchedule && <div className="text-xs mt-0.5" style={{ color: '#6b7280' }}>PM: {wo.maintenanceSchedule.taskName}</div>}
                   </div>
                 </td>
@@ -786,7 +786,7 @@ function CalendarView({ workOrders, onSelect }: { workOrders: WorkOrder[]; onSel
           <button onClick={() => setCurrentDate(d => subMonths(d, 1))} className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', cursor: 'pointer' }}>
             <ChevronLeft size={16} />
           </button>
-          <span className="font-bold text-white text-base">{format(currentDate, 'MMMM yyyy')}</span>
+          <span className="font-bold text-season-text text-base">{format(currentDate, 'MMMM yyyy')}</span>
           <button onClick={() => setCurrentDate(d => addMonths(d, 1))} className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', cursor: 'pointer' }}>
             <ChevronRight size={16} />
           </button>
@@ -934,7 +934,7 @@ export default function WorkOrdersPage() {
       {/* ── Header ── */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-season-text flex items-center gap-2">
             <ClipboardList size={22} style={{ color: '#a78bfa' }} />
             Work <span style={{ color: '#a78bfa' }}>Orders</span>
           </h1>

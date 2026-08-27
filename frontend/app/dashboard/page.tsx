@@ -95,7 +95,7 @@ export default function DashboardPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white">
+          <h1 className="text-3xl font-bold text-season-text">
             Command <span style={{ color: '#a78bfa' }}>Bridge</span>
           </h1>
           <p className="text-sm mt-1" style={{ color: '#6b7280' }}>
@@ -150,7 +150,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
               <Bell size={18} style={{ color: '#a78bfa' }} />
-              <h2 className="font-semibold text-white">System Alerts</h2>
+              <h2 className="font-semibold text-season-text">System Alerts</h2>
               <span
                 className="text-xs px-2 py-0.5 rounded-full font-bold"
                 style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#f87171' }}
@@ -182,7 +182,7 @@ export default function DashboardPage() {
                   }} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-medium text-white">{alert.title}</span>
+                      <span className="text-sm font-medium text-season-text">{alert.title}</span>
                       <AlertBadge severity={alert.severity} />
                     </div>
                     <p className="text-xs mt-1 truncate" style={{ color: '#6b7280' }}>{alert.message}</p>
@@ -211,7 +211,7 @@ export default function DashboardPage() {
           <div className="glass-card p-5">
             <div className="flex items-center gap-2 mb-4">
               <ClipboardList size={16} style={{ color: '#a78bfa' }} />
-              <h3 className="font-semibold text-white text-sm">Work Order Status</h3>
+              <h3 className="font-semibold text-season-text text-sm">Work Order Status</h3>
             </div>
             {[
               { label: 'Pending', value: stats?.workOrders.pending ?? 0, color: '#fbbf24' },
@@ -241,7 +241,7 @@ export default function DashboardPage() {
           <div className="glass-card p-5">
             <div className="flex items-center gap-2 mb-4">
               <ShieldCheck size={16} style={{ color: '#34d399' }} />
-              <h3 className="font-semibold text-white text-sm">Compliance</h3>
+              <h3 className="font-semibold text-season-text text-sm">Compliance</h3>
             </div>
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -259,7 +259,7 @@ export default function DashboardPage() {
 
           {/* Quick Links */}
           <div className="glass-card p-4">
-            <h3 className="font-semibold text-white text-sm mb-3">Quick Actions</h3>
+            <h3 className="font-semibold text-season-text text-sm mb-3">Quick Actions</h3>
             <div className="space-y-2">
               <Link href="/fleet" className="sidebar-link text-sm">
                 <Map size={14} />

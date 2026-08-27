@@ -34,7 +34,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <main className="flex-1 overflow-auto bg-[#0a0514]">
+      <main className="flex-1 overflow-auto bg-season-bg">
         {children}
       </main>
     </div>

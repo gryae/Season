@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { AuthWrapper } from '@/components/AuthWrapper';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -27,11 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <AuthWrapper>
+        <ThemeProvider><AuthWrapper>
           <div className="page-enter p-6 md:p-8 w-full h-full">
             {children}
           </div>
-        </AuthWrapper>
+        </AuthWrapper></ThemeProvider>
       </body>
     </html>
   );

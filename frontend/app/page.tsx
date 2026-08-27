@@ -95,7 +95,7 @@ export default function Home() {
         `}</style>
         <Link
           href="/dashboard"
-          className="cta-btn inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-white font-bold text-lg"
+          className="cta-btn inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-season-text font-bold text-lg"
         >
           <Anchor size={20} />
           Enter Bridge

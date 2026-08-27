@@ -7,14 +7,31 @@
    SEASON GLOBAL STYLES
    ============================================================ */
 
+
+:root.light {
+  --season-purple: #7c3aed;
+  --season-purple-dark: #6d28d9;
+  --season-ocean: #0ea5e9;
+  --season-bg: #e2e8f0;
+  --season-surface: #ffffff;
+  --season-card: rgba(0, 0, 0, 0.05);
+  --season-border: rgba(0, 0, 0, 0.3);
+  --season-text: #0f172a;
+  --season-muted: #475569;
+  --season-purple-border: rgba(124, 58, 237, 0.4);
+}
+:root {
+  --season-purple-border: rgba(139, 92, 246, 0.2);
+}
+
 :root {
   --season-purple: #7c3aed;
   --season-purple-dark: #4c1d95;
   --season-ocean: #0ea5e9;
   --season-bg: #0a0514;
   --season-surface: #120a2e;
-  --season-card: rgba(255, 255, 255, 0.04);
-  --season-border: rgba(255, 255, 255, 0.08);
+  --season-card: var(--season-card);
+  --season-border: var(--season-border);
   --season-text: #e2e8f0;
   --season-muted: #94a3b8;
 }
@@ -156,7 +173,7 @@ body {
    INPUTS & SELECTS
    ============================================================ */
 .season-input, .season-select {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--season-card);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   color: var(--season-text);
@@ -250,7 +267,7 @@ body {
   padding: 14px 16px;
   font-size: 0.875rem;
   color: var(--season-text);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--season-card);
 }
 
 .season-table tbody tr {
