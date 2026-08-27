@@ -29,4 +29,9 @@ export class VesselsController {
   updateStatus(@Param('id') id: string, @Body('status') status: any) {
     return this.vesselsService.updateStatus(id, status);
   }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() data: any) {
+    return this.vesselsService.update(id, data);
+  }
 }

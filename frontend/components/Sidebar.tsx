@@ -12,9 +12,14 @@ import {
   Bell,
   Settings,
   Waves,
+  Ship,
+  FileCheck,
+  Activity,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { complianceApi } from '@/lib/api';
+import { useAuthStore } from '@/store/auth.store';
+import { LogOut } from 'lucide-react';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -22,12 +27,14 @@ const navItems = [
   { href: '/work-orders', label: 'Work Orders', icon: ClipboardList },
   { href: '/inventory', label: 'Inventory', icon: Package },
   { href: '/compliance', label: 'Compliance', icon: ShieldCheck },
+  { href: '/meters', label: 'Measures', icon: Activity },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
   const [alertCount, setAlertCount] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
+  const logout = useAuthStore(s => s.logout);
 
   useEffect(() => {
     complianceApi.getAlerts()
@@ -109,9 +116,9 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Bottom: Vessel Status Indicator */}
-      {!collapsed && (
-        <div className="px-3 pb-3">
+      {/* Bottom: Vessel Status Indicator & Logout */}
+      <div className="px-3 pb-3 space-y-2">
+        {!collapsed && (
           <div
             className="px-3 py-3 rounded-xl text-xs"
             style={{ background: 'rgba(139, 92, 246, 0.08)', border: '1px solid rgba(139, 92, 246, 0.2)' }}
@@ -125,8 +132,17 @@ export function Sidebar() {
               <span style={{ color: '#94a3b8' }}>All systems operational</span>
             </div>
           </div>
-        </div>
-      )}
+        )}
+        <button
+          onClick={logout}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
+          style={collapsed ? { justifyContent: 'center' } : {}}
+          title={collapsed ? "Log out" : undefined}
+        >
+          <LogOut size={18} />
+          {!collapsed && <span className="text-sm font-medium">Log out</span>}
+        </button>
+      </div>
 
       {/* Collapse toggle */}
       <button

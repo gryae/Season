@@ -170,6 +170,22 @@ export class WorkOrdersService {
     return { workOrder: updated, purchaseRequestsCreated: prResults };
   }
 
+  async removeSparepartUsage(woId: string, usageId: string) {
+    const usage = await this.prisma.workOrderSparepart.findUnique({ where: { id: usageId } });
+    if (!usage || usage.workOrderId !== woId) throw new NotFoundException('Usage not found');
+
+    // Return stock
+    await this.prisma.sparepart.update({
+      where: { id: usage.sparepartId },
+      data: { currentStock: { increment: usage.quantityUsed } },
+    });
+
+    // Delete usage
+    await this.prisma.workOrderSparepart.delete({ where: { id: usageId } });
+
+    return this.findOne(woId);
+  }
+
   async getStats() {
     const [total, pending, inProgress, completed] = await Promise.all([
       this.prisma.workOrder.count(),

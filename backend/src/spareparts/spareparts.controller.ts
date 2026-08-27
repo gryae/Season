@@ -44,4 +44,9 @@ export class SparepartsController {
   updatePRStatus(@Param('id') id: string, @Body() body: { status: string }) {
     return this.sparepartsService.updatePRStatus(id, body.status);
   }
+
+  @Post('purchase-requests')
+  createPurchaseRequest(@Body() body: { sparepartId: string; quantityNeeded: number; reason?: string }) {
+    return this.sparepartsService.createPurchaseRequest(body);
+  }
 }

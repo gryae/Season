@@ -10,23 +10,27 @@ import { SparepartsModule } from './spareparts/spareparts.module';
 import { WorkOrdersModule } from './work-orders/work-orders.module';
 import { ComplianceModule } from './compliance/compliance.module';
 import { CronModule } from './cron/cron.module';
+import { MetersModule } from './meters/meters.module';
 import { UploadController } from './upload/upload.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ScheduleModule.forRoot(),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/public',
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads',
     }),
+    ScheduleModule.forRoot(),
     PrismaModule,
+    AuthModule,
     VesselsModule,
     TelemetryModule,
     SparepartsModule,
     WorkOrdersModule,
     ComplianceModule,
     CronModule,
+    MetersModule,
   ],
 })
 export class AppModule {}

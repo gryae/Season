@@ -65,4 +65,17 @@ export class VesselsService {
       data: { status },
     });
   }
+
+  update(id: string, data: any) {
+    return this.prisma.vessel.update({
+      where: { id },
+      data: {
+        name: data.name,
+        imoNumber: data.imoNumber,
+        vesselType: data.type,
+        status: data.status,
+        flag: data.flag,
+      },
+    });
+  }
 }

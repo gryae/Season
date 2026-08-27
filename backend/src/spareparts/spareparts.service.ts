@@ -108,10 +108,35 @@ export class SparepartsService {
     });
   }
 
-  updatePRStatus(id: string, status: string) {
-    return this.prisma.purchaseRequest.update({
+  async updatePRStatus(id: string, status: string) {
+    const pr = await this.prisma.purchaseRequest.findUnique({ where: { id } });
+    if (!pr) throw new NotFoundException('PR not found');
+
+    const updatedPR = await this.prisma.purchaseRequest.update({
       where: { id },
       data: { status: status as any },
+    });
+
+    if (status === 'FULFILLED' && pr.status !== 'FULFILLED') {
+      await this.prisma.sparepart.update({
+        where: { id: pr.sparepartId },
+        data: {
+          currentStock: { increment: pr.quantityNeeded }
+        }
+      });
+    }
+
+    return updatedPR;
+  }
+
+  async createPurchaseRequest(data: { sparepartId: string; quantityNeeded: number; reason?: string }) {
+    const prNumber = `PR-${Date.now()}-${data.sparepartId.slice(-4).toUpperCase()}`;
+    return this.prisma.purchaseRequest.create({
+      data: {
+        prNumber,
+        ...data,
+        status: 'PENDING',
+      },
     });
   }
 

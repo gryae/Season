@@ -1,8 +1,27 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log('🌱 Starting seed...');
+
+  // ============================================
+  // DEFAULT USER
+  // ============================================
+  const adminPassword = await bcrypt.hash('admin123', 10);
+  await prisma.user.upsert({
+    where: { username: 'admin' },
+    update: { passwordHash: adminPassword },
+    create: {
+      username: 'admin',
+      passwordHash: adminPassword,
+      name: 'Administrator',
+      role: 'ADMIN',
+    },
+  });
+  console.log('✅ Created default admin user (admin/admin123)');
+
   console.log('🌱 Seeding SeaSon database...');
 
   // ============================================================

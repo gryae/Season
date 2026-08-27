@@ -149,6 +149,7 @@ export const workOrderApi = {
   }) => api.patch(`/work-orders/${id}/status`, data).then(r => r.data),
   getComments: (id: string) => api.get<WorkOrderComment[]>(`/work-orders/${id}/comments`).then(r => r.data),
   addComment: (id: string, data: { senderName: string; message: string }) => api.post<WorkOrderComment>(`/work-orders/${id}/comments`, data).then(r => r.data),
+  removeSparepart: (id: string, usageId: string) => api.delete(`/work-orders/${id}/spareparts/${usageId}`).then(r => r.data),
 };
 
 // Spareparts
@@ -160,6 +161,8 @@ export const sparepartApi = {
   deduct: (id: string, quantity: number) =>
     api.post(`/spareparts/${id}/deduct`, { quantity }).then(r => r.data),
   getPurchaseRequests: () => api.get<PurchaseRequest[]>('/spareparts/purchase-requests').then(r => r.data),
+  createPurchaseRequest: (data: { sparepartId: string; quantityNeeded: number; reason?: string }) =>
+    api.post<PurchaseRequest>('/spareparts/purchase-requests', data).then(r => r.data),
   updatePRStatus: (id: string, status: string) =>
     api.patch(`/spareparts/purchase-requests/${id}/status`, { status }).then(r => r.data),
 };
@@ -175,6 +178,36 @@ export const complianceApi = {
   getStats: () => api.get<{ total: number; valid: number; expiringSoon: number; expired: number }>('/compliance/stats').then(r => r.data),
 };
 
+// Meters (Custom Telemetry)
+export interface Meter {
+  id: string;
+  vesselId: string;
+  name: string;
+  unit: string;
+  lowThreshold?: number | null;
+  highThreshold?: number | null;
+  reminderFrequency?: string | null;
+  createdAt: string;
+  vessel?: { id: string; name: string; imoNumber: string };
+  readings?: MeterReading[];
+}
+
+export interface MeterReading {
+  id: string;
+  meterId: string;
+  value: number;
+  timestamp: string;
+  loggedBy?: string;
+}
+
+export const meterApi = {
+  getAll: () => api.get<Meter[]>('/meters').then(r => r.data),
+  getOne: (id: string) => api.get<Meter>(`/meters/${id}`).then(r => r.data),
+  create: (data: Partial<Meter>) => api.post<Meter>('/meters', data).then(r => r.data),
+  getReadings: (id: string) => api.get<MeterReading[]>(`/meters/${id}/readings`).then(r => r.data),
+  addReading: (id: string, data: { value: number; loggedBy?: string }) => api.post<MeterReading>(`/meters/${id}/readings`, data).then(r => r.data),
+};
+
 // Upload
 export const uploadApi = {
   uploadFile: async (file: File) => {
@@ -187,3 +220,31 @@ export const uploadApi = {
 };
 
 export default api;
+
+// Auth
+export const authApi = {
+  login: (username: string, pass: string) => api.post<{ access_token: string, user: any }>('/auth/login', { username, password: pass }).then(r => r.data),
+};
+
+// Request Interceptor for JWT
+api.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('season_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && typeof window !== 'undefined' && window.location.pathname !== '/login') {
+      localStorage.removeItem('season_token');
+      localStorage.removeItem('season_user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);

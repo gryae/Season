@@ -28,6 +28,7 @@ model Vessel {
   workOrders           WorkOrder[]
   maintenanceSchedules MaintenanceSchedule[]
   certificates         VesselCertificate[]
+  meters               Meter[]
 }
 
 enum VesselStatus {
@@ -264,4 +265,51 @@ enum AlertSeverity {
   INFO
   WARNING
   CRITICAL
+}
+
+// ============================================
+// METERS (CUSTOM TELEMETRY)
+// ============================================
+model Meter {
+  id               String   @id @default(cuid())
+  vesselId         String
+  name             String
+  unit             String
+  lowThreshold     Float?
+  highThreshold    Float?
+  reminderFrequency String?  // e.g., "DAILY", "WEEKLY"
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  vessel           Vessel   @relation(fields: [vesselId], references: [id])
+  readings         MeterReading[]
+}
+
+model MeterReading {
+  id          String   @id @default(cuid())
+  meterId     String
+  value       Float
+  timestamp   DateTime @default(now())
+  loggedBy    String?
+
+  meter       Meter    @relation(fields: [meterId], references: [id])
+}
+
+// ============================================
+// USERS (AUTH)
+// ============================================
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  USER
+  TECHNICIAN
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Body, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query } from '@nestjs/common';
 import { WorkOrdersService } from './work-orders.service';
 
 @Controller('work-orders')
@@ -43,5 +43,10 @@ export class WorkOrdersController {
   @Post(':id/comments')
   addComment(@Param('id') id: string, @Body() body: any) {
     return this.workOrdersService.addComment(id, body);
+  }
+
+  @Delete(':id/spareparts/:usageId')
+  removeSparepartUsage(@Param('id') id: string, @Param('usageId') usageId: string) {
+    return this.workOrdersService.removeSparepartUsage(id, usageId);
   }
 }

@@ -1,6 +1,6 @@
+import { AuthWrapper } from '@/components/AuthWrapper';
 import type { Metadata } from 'next';
 import './globals.css';
-import { Sidebar } from '@/components/Sidebar';
 
 export const metadata: Metadata = {
   title: 'SeaSon — Ship Management System',
@@ -27,14 +27,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <div className="flex h-screen overflow-hidden" style={{ background: 'var(--season-bg)' }}>
-          <Sidebar />
-          <main className="flex-1 overflow-auto">
-            <div className="page-enter p-6 md:p-8">
-              {children}
-            </div>
-          </main>
-        </div>
+        <AuthWrapper>
+          <div className="page-enter p-6 md:p-8 w-full h-full">
+            {children}
+          </div>
+        </AuthWrapper>
       </body>
     </html>
   );
