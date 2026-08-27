@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './jwt-auth.guard';
 
@@ -11,5 +11,11 @@ export class AuthController {
   @Post('login')
   login(@Body() body: Record<string, any>) {
     return this.authService.login(body.username, body.password);
+  }
+
+  @Public()
+  @Get('seed')
+  seedAdmin() {
+    return this.authService.seedAdmin();
   }
 }

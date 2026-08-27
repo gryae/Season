@@ -32,4 +32,19 @@ export class AuthService {
       }
     };
   }
+
+  async seedAdmin() {
+    const adminPassword = await bcrypt.hash('admin123', 10);
+    const admin = await this.prisma.user.upsert({
+      where: { username: 'admin' },
+      update: { passwordHash: adminPassword },
+      create: {
+        username: 'admin',
+        passwordHash: adminPassword,
+        name: 'Administrator',
+        role: 'ADMIN',
+      },
+    });
+    return { message: 'Admin user seeded successfully!', user: { id: admin.id, username: admin.username } };
+  }
 }
